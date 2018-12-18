@@ -1,6 +1,9 @@
 package model
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type Profile struct {
 	Name string //姓名
@@ -19,6 +22,15 @@ type Profile struct {
 
 }
 
+func FromJsonObj(o interface{})(Profile ,error){
+	var profile Profile
+	s, err := json.Marshal(o)
+	if err != nil {
+		return profile,err
+	}
+	err = json.Unmarshal(s,&profile)
+	return profile,err
+}
 
 func (p Profile) String()string{
 	return fmt.Sprintf("name : %s ,Gender : %s ,age : %d ,height : %d ,weight : %d ," +

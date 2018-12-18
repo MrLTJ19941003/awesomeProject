@@ -8,17 +8,21 @@ import (
 var (
 	profileRe  = regexp.MustCompile(`<a href="(http://album.zhenai.com/u/[0-9]+)"[^>]*>([^<]+)</a>`)
 	cityUrlRe = regexp.MustCompile(`href="(http://www.zhenai.com/zhenghun/[^"]+)"`)
+	genderRe = regexp.MustCompile(`<td width="180"><span class="grayL">性别：</span>([^>]+)</td>`)
 )
 func ParserCity(contents []byte)engine.ParserResult{
 	//re := regexp.MustCompile(cityRe)
 	matches := profileRe.FindAllSubmatch(contents, -1)
-
+	genderMatches := genderRe.FindAllSubmatch(contents, -1)
 	result := engine.ParserResult{}
-	for _,m := range matches{
+	for i,m := range matches{
 		//result.Items = append(result.Items,"User "+string(m[2]))
+		/*url := string(m[1])
+		name := string(m[2])
+		gender :=  string(genderMatches[i][1])*/
 		result.Requests = append(result.Requests,engine.Request{
 			Url : string(m[1]),
-			ParserFunc : ParserProfile,
+			ParserFunc : ProfileParser(string(m[2]),string(genderMatches[i][1]),string(m[1])),
 		})
 	}
 
@@ -31,4 +35,10 @@ func ParserCity(contents []byte)engine.ParserResult{
 	}
 
 	return result
+}
+
+func ProfileParser(name string,gender string,url string) engine.ParserFunc{
+	return func(b []byte) engine.ParserResult{
+		return ParserProfile(b,name,gender,url)
+	}
 }

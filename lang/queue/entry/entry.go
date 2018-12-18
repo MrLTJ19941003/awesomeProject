@@ -1,7 +1,7 @@
 package main
 
 import (
-	"awesomeProject/queue"
+	"awesomeProject/lang/queuequeue"
 	"fmt"
 )
 

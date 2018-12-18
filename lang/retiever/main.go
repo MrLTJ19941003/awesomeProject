@@ -1,8 +1,8 @@
 package main
 
 import (
-	"awesomeProject/retiever/mock"
-	real2 "awesomeProject/retiever/real"
+	"awesomeProject/lang/retieveriever/mock"
+	real2 "awesomeProject/lang/retieveriever/real"
 	"fmt"
 	"time"
 )

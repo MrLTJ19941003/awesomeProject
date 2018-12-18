@@ -1,7 +1,7 @@
 package main
 
 import (
-	"awesomeProject/tree"
+	"awesomeProject/lang/tree/tree"
 	"fmt"
 )
 

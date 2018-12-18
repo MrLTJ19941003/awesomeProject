@@ -3,7 +3,7 @@ package engine
 type ConcurrentEngine struct {
 	Scheduler Scheduler
 	WorkerCount int
-	ItemChan chan interface{}
+	ItemChan chan Item
 }
 
 type Scheduler interface {
@@ -18,12 +18,8 @@ type ReadyNotifier interface {
 }
 
 func  (c *ConcurrentEngine) Run(seeds ...Request)  {
-
-
-	//in := make(chan Request)
 	out := make(chan ParserResult)
 	c.Scheduler.Run()
-	//c.Scheduler.ConfigureMasterWorkerChan(in)
 
 	for i :=0;i<c.WorkerCount;i++{
 		createWorker(c.Scheduler.WorkerChan(), out,c.Scheduler)
@@ -49,11 +45,9 @@ func  (c *ConcurrentEngine) Run(seeds ...Request)  {
 			c.Scheduler.Submit(request)
 		}
 	}
-
 }
 
 var visitedUrl = make(map[string]bool)
-
 func isDuplicate(url string) bool{
 	if visitedUrl[url] {
 		return true

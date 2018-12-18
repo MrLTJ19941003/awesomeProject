@@ -33,6 +33,5 @@ func Fetch(url string)([]byte,error){
 	//urf8Reader := transform.NewReader(resp.Body,
 	//simplifiedchinese.GBK.NewDecoder())
 	all, err := ioutil.ReadAll(resp.Body)
-	//fmt.Printf("%s ",all)
 	return all,err
 }
