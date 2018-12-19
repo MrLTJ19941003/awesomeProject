@@ -8,10 +8,10 @@ import (
 	"testing"
 )
 
-func TestSearchResultView_Render(t *testing.T){//SearchResultView测试方式
-	view := CreateSearchResultView("search.html")//将html页面加载至template模块中
+func TestSearchResultView_Render(t *testing.T) { //SearchResultView测试方式
+	view := CreateSearchResultView("search.html") //将html页面加载至template模块中
 
-	out,err := os.Create("template.test.html")//创建一个html页面
+	out, err := os.Create("template.test.html") //创建一个html页面
 	page := searchModel.SearchResult{}
 	page.Hits = 120
 	page.Start = 70
@@ -35,12 +35,12 @@ func TestSearchResultView_Render(t *testing.T){//SearchResultView测试方式
 			Car:        "未购车",
 		},
 	}
-	for i := 0 ;i<=10 ;i++{
-		page.Items = append(page.Items , item)
+	for i := 0; i <= 10; i++ {
+		page.Items = append(page.Items, item)
 	}
 
-	err = view.Render(out, page)//将page结构体对象数据映射进html页面中，然后再加载至输出流中。
-	if err != nil{
+	err = view.Render(out, page) //将page结构体对象数据映射进html页面中，然后再加载至输出流中。
+	if err != nil {
 		panic(err)
 	}
 }

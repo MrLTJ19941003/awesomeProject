@@ -30,34 +30,34 @@ func TestSave(t *testing.T) {
 			Car:        "未购车",
 		},
 	}
-	client , err := elastic.NewClient(
+	client, err := elastic.NewClient(
 		elastic.SetSniff(false))
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 
-	const index  = "dating_test"
-	err = Save(item,client,index)
-	if err != nil{
+	const index = "dating_test"
+	err = Save(item, client, index)
+	if err != nil {
 		panic(err)
 	}
 
 	resp, err := client.Get().Index(index).Type(item.Type).Id(item.Id).Do(context.Background())
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
-	t.Logf("%s" ,*resp.Source)
+	t.Logf("%s", *resp.Source)
 	//b := []byte(*resp.Source)
 	var actual engine.Item
 	err = json.Unmarshal(*resp.Source, &actual)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
-	actualProfile ,err := model.FromJsonObj(actual.Payload)
+	actualProfile, err := model.FromJsonObj(actual.Payload)
 	actual.Payload = actualProfile
 
 	if actual != item {
 		t.Errorf("got %v, expected %v",
-			actual,item)
+			actual, item)
 	}
 }

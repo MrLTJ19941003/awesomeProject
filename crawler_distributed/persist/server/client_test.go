@@ -3,18 +3,19 @@ package main
 import (
 	"awesomeProject/crawler/engine"
 	"awesomeProject/crawler/model"
+	"awesomeProject/crawler_distributed/config"
 	"awesomeProject/crawler_distributed/rpcsupport"
 	"testing"
 	"time"
 )
 
-func TestItemSaver(t *testing.T){
+func TestItemSaver(t *testing.T) {
 	//start ItemSaverServer
 	host := ":1234"
-	go serveRpc(host,"test1")
+	go serveRpc(host, "test1")
 	time.Sleep(time.Second)
 	//start ItemSaverClient
-	client,err := rpcsupport.NewClient(host)
+	client, err := rpcsupport.NewClient(host)
 	if err != nil {
 		//log.Printf("client error : %v ",err)
 		panic(err)
@@ -41,8 +42,8 @@ func TestItemSaver(t *testing.T){
 		},
 	}
 	result := ""
-	err = client.Call("ItemSaverService.Save", item, &result)
-	if err!=nil || result != "ok"{
-		t.Errorf("result : %s ;error : %s",result,err)
+	err = client.Call(config.ItemSaverRpc, item, &result)
+	if err != nil || result != "ok" {
+		t.Errorf("result : %s ;error : %s", result, err)
 	}
 }

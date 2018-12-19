@@ -8,30 +8,30 @@ import (
 	"log"
 )
 
-func ItemSaver(index string) (chan engine.Item ,error){
+func ItemSaver(index string) (chan engine.Item, error) {
 	client, err := elastic.NewClient(
 		elastic.SetSniff(false),
 	)
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
 	out := make(chan engine.Item)
 	go func() {
 		itemCount := 0
 		for {
-			item := <- out
-			log.Printf("Item Saver : Got item #%d : %v " ,itemCount,item)
+			item := <-out
+			log.Printf("Item Saver : Got item #%d : %v ", itemCount, item)
 			itemCount++
 
-			Save(item,client,index)
+			Save(item, client, index)
 		}
 	}()
-	return out,nil
+	return out, nil
 }
 
-func Save(item engine.Item,client *elastic.Client,index string)  error{
+func Save(item engine.Item, client *elastic.Client, index string) error {
 
-	if item.Type == ""{
+	if item.Type == "" {
 		return errors.New("must supply type!")
 	}
 
@@ -39,7 +39,7 @@ func Save(item engine.Item,client *elastic.Client,index string)  error{
 		Index(index).
 		Type(item.Type)
 
-	if item.Id != ""{
+	if item.Id != "" {
 		indexService.Id(item.Id)
 	}
 	_, err := indexService.
