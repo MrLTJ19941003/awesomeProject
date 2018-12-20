@@ -19,6 +19,7 @@ var hokouRe = regexp.MustCompile(`<div class="m-btn pink" [^>]*>籍贯:([^>]+)</
 var xinzuoRe = regexp.MustCompile(`<div class="m-btn purple" [^>]*>([^>]+)\([^>]+\)</div>`)
 var houseRe = regexp.MustCompile(`<div class="m-btn pink" [^>]*>(已[^<]+房)</div>`)
 var carRe = regexp.MustCompile(`<div class="m-btn pink" [^>]*>(已[^<]+车)</div>`)
+var imagesUrlRe = regexp.MustCompile(`class="logo f-fl" style="background-image:url\(([^?|)]+)`)
 
 var idUrlRe = regexp.MustCompile(`http://album.zhenai.com/u/([\d]+)`)
 
@@ -49,6 +50,7 @@ func parserProfile(contents []byte, p ProfileParser) engine.ParserResult {
 	//profile.Occupation = extractString(contents,occupationRe) //教育
 	profile.Name = p.UserName //用户名
 
+	profile.UserImageUrl = extractString(contents, imagesUrlRe)
 	//log.Println(profile)
 	result := engine.ParserResult{
 		Items: []engine.Item{

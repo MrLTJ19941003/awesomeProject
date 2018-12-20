@@ -18,4 +18,7 @@ const (
 	//RPC Endpoints
 	ItemSaverRpc = "ItemSaverService.Save"
 	CrawRpc      = "CrawlService.Process"
+	//shijijiayuan获取用户的接口url
+	GetUserUrl = "http://www.jiayuan.com/ajax/interested.php?r=0.32553824808613996&ad_param[]=pid%3Apersonalmatch_profile_new%7Ccount%3A6%7C"//cachesql%3A3600%7Csim_uid%3A187086135
+
 )

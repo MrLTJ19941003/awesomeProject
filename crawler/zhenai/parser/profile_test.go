@@ -1,20 +1,15 @@
-package view
+package parser
 
 import (
 	"awesomeProject/crawler/engine"
-	searchModel "awesomeProject/crawler/frontend/model"
+	"awesomeProject/crawler/fetcher"
 	"awesomeProject/crawler/model"
-	"os"
+	"fmt"
 	"testing"
 )
 
-func TestSearchResultView_Render(t *testing.T) { //SearchResultView测试方式
-	view := CreateSearchResultView("search.html") //将html页面加载至template模块中
+func TestParserProfile(t *testing.T) {
 
-	out, err := os.Create("template.test.html") //创建一个html页面
-	page := searchModel.SearchResult{}
-	page.Hits = 120
-	page.Start = 70
 	item := engine.Item{
 		Url:  "http://album.zhenai.com/u/93861579",
 		Type: "zhenai",
@@ -36,12 +31,15 @@ func TestSearchResultView_Render(t *testing.T) { //SearchResultView测试方式
 			Car:          "未购车",
 		},
 	}
-	for i := 0; i <= 10; i++ {
-		page.Items = append(page.Items, item)
-	}
-
-	err = view.Render(out, page) //将page结构体对象数据映射进html页面中，然后再加载至输出流中。
+	contents, err := fetcher.Fetch("http://album.zhenai.com/u/1670025259")
 	if err != nil {
 		panic(err)
 	}
+	parserResult := parserProfile(contents, ProfileParser{
+		UserName: "安静的雪",
+		Url:      "http://album.zhenai.com/u/93861579",
+		Gender:   "女",
+	})
+
+	fmt.Printf("result : %v ,\n item : %v", parserResult, item)
 }

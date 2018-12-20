@@ -45,6 +45,7 @@
             <table class="highlight">
                 <thead>
                 <tr>
+                    <th>photo</th>
                     <th>Name</th>
                     <th>Gender</th>
                     <th>Age</th>
@@ -60,6 +61,7 @@
                 <tbody>
                 {{range .Items}}
                 <tr>
+                    <td><div style='background-image:url({{.Payload.UserImageUrl}}?scrop=1&amp;crop=1&amp;cpos=north&amp;w=120&amp;h=120);height: 120px;width: 120px;'></div></td>
                     <td><a href="{{.Url}}">{{.Payload.Name}}</a></td>
                     {{with .Payload}}
                     <td><span>{{.Gender}}</span></td>

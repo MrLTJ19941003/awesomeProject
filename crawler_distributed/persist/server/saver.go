@@ -17,7 +17,7 @@ func main() {
 		fmt.Println("Must specify a port")
 		return
 	}
-	err := serveRpc(fmt.Sprintf(":%d", *port), config.ElasticIndexTest)
+	err := serveRpc(fmt.Sprintf(":%d", *port), config.ElasticIndex)
 	if err != nil {
 		panic(err)
 	}
